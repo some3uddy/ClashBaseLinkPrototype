@@ -1,8 +1,8 @@
 package codec
 
-import Building
-import BuildingType
-import CoordinateGrid
+import grid.Building
+import grid.BuildingType
+import grid.CoordinateGrid
 import java.util.*
 
 

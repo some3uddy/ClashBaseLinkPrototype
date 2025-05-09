@@ -1,10 +1,10 @@
 package codec
 
-import Building
-import Coordinate
-import CoordinateGrid
 import Tile
 import getIdToBuildingMap
+import grid.Building
+import grid.Coordinate
+import grid.CoordinateGrid
 
 class IgnoreBlockedAndTooSmallCodec : ICodec {
 
@@ -30,7 +30,7 @@ class IgnoreBlockedAndTooSmallCodec : ICodec {
                 idToBuildingMap[id]
             }
             .iterator()
-        //.chunked(CoordinateGrid.SIZE)
+        //.chunked(grid.CoordinateGrid.SIZE)
 
         val grid = CoordinateGrid()
         var currentBuilding = buildingIds.next()

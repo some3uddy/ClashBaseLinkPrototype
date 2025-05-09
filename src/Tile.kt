@@ -1,3 +1,5 @@
+import grid.Building
+
 sealed class Tile {
     object Empty : Tile()
     data class Built(val building: Building) : Tile()

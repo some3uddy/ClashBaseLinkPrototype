@@ -2,6 +2,9 @@ import codec.CompleteGridCodec
 import codec.ICodec
 import codec.IgnoreBlockedAndTooSmallCodec
 import codec.IgnoreBlockedCodec
+import grid.Building
+import grid.BuildingType
+import grid.CoordinateGrid
 
 // area is 44x44
 // potentially use BitSet
@@ -17,6 +20,10 @@ import codec.IgnoreBlockedCodec
 // - place from size 1 2 3 4 in that order, place 4 3 2 1 for mock
 
 fun main() {
+    runAll()
+}
+
+fun runAll() {
     println("complete")
     runExperiment(CompleteGridCodec())
     println()
@@ -30,11 +37,13 @@ fun main() {
 fun runExperiment(codec: ICodec) {
     val idToBuildingMap = getIdToBuildingMap()
 
-    val grid = CoordinateGrid()
+    val grid = CoordinateGrid.createRandomlyPopulated()
+
+    /*
     val shuffledBuildingsIterator = idToBuildingMap.values.shuffled().iterator()
 
     var currentBuilding = shuffledBuildingsIterator.next()
-
+    
     outer@ for (y in CoordinateGrid.COORDINATE_RANGE) {
         for (x in CoordinateGrid.COORDINATE_RANGE) {
             if (!grid.tryAddBuilding(currentBuilding, Coordinate(x, y))) {
@@ -52,6 +61,7 @@ fun runExperiment(codec: ICodec) {
     if (shuffledBuildingsIterator.hasNext()) {
         println("buildings have been left unplaced")
     }
+    */
 
     val encodedGrid = codec.encodeGrid(grid)
     println("binary encoded length: ${encodedGrid.length}")
@@ -63,7 +73,7 @@ fun runExperiment(codec: ICodec) {
 
     val decodedGrid = codec.decodeGrid(decodedFromb64Grid)
     //val decodedGrid = codec.decodeGrid(encodedGrid)
-    println("equal: ${decodedGrid.compare(grid)}")
+    println("equal: ${decodedGrid == grid}")
 
 }
 

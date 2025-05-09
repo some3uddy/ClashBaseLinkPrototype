@@ -1,3 +1,5 @@
+package grid
+
 enum class BuildingType(val amount: Int, val size: Int = 3) {
     WALL(325, 1),
     TOWNHALL(1, 4),

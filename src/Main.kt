@@ -1,0 +1,83 @@
+import codec.CompleteGridCodec
+import codec.ICodec
+import codec.IgnoreBlockedAndTooSmallCodec
+import codec.IgnoreBlockedCodec
+
+// area is 44x44
+// potentially use BitSet
+
+// done:
+// - basic encoder but not saving blocked slots at all
+// - ignore blocked encoder with bool skip for empty
+
+// todo:
+
+// - ignore spaces too small
+// - check notes
+// - place from size 1 2 3 4 in that order, place 4 3 2 1 for mock
+
+fun main() {
+    println("complete")
+    runExperiment(CompleteGridCodec())
+    println()
+    println("ignore blocked")
+    runExperiment(IgnoreBlockedCodec())
+    println()
+    println("ignore blocked and too small")
+    runExperiment(IgnoreBlockedAndTooSmallCodec())
+}
+
+fun runExperiment(codec: ICodec) {
+    val idToBuildingMap = getIdToBuildingMap()
+
+    val grid = CoordinateGrid()
+    val shuffledBuildingsIterator = idToBuildingMap.values.shuffled().iterator()
+
+    var currentBuilding = shuffledBuildingsIterator.next()
+
+    outer@ for (y in CoordinateGrid.COORDINATE_RANGE) {
+        for (x in CoordinateGrid.COORDINATE_RANGE) {
+            if (!grid.tryAddBuilding(currentBuilding, Coordinate(x, y))) {
+                continue
+            }
+
+            if (!shuffledBuildingsIterator.hasNext()) {
+                break@outer
+            }
+
+            currentBuilding = shuffledBuildingsIterator.next()
+        }
+    }
+
+    if (shuffledBuildingsIterator.hasNext()) {
+        println("buildings have been left unplaced")
+    }
+
+    val encodedGrid = codec.encodeGrid(grid)
+    println("binary encoded length: ${encodedGrid.length}")
+    val b64encodedGrid = ICodec.encodeBinaryToBase64(encodedGrid)
+    println("base64 encoded size: ${b64encodedGrid.length}")
+
+    val decodedFromb64Grid = ICodec.decodeBase64ToBinaryString(b64encodedGrid)
+    println("binary decoded length: ${decodedFromb64Grid.length}")
+
+    val decodedGrid = codec.decodeGrid(decodedFromb64Grid)
+    //val decodedGrid = codec.decodeGrid(encodedGrid)
+    println("equal: ${decodedGrid.compare(grid)}")
+
+}
+
+fun getIdToBuildingMap(): Map<Int, Building> {
+    val buildings: MutableMap<Int, Building> = mutableMapOf()
+    var idCounter = 0
+
+    BuildingType.entries.forEach { buildingType ->
+        repeat(buildingType.amount) {
+            val newBuilding = Building(idCounter, buildingType)
+            buildings.put(idCounter, newBuilding)
+            idCounter++
+        }
+    }
+
+    return buildings.toMap()
+}

@@ -49,9 +49,9 @@ fun runExperiment(codec: ICodec) {
 
     println("equal: ${decodedGrid == grid}")
 
-    grid.print()
-    println()
-    decodedGrid.print()
+//    grid.print()
+//    println()
+//    decodedGrid.print()
 
 }
 

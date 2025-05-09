@@ -25,7 +25,7 @@ class IgnoreBlockedAndTooSmallCodec : ICodec {
 
         val buildingIds = binaryGrid
             .chunked(idBitSize)
-            .mapNotNull {
+            .map {
                 val id = it.toInt(2)
                 idToBuildingMap[id]
             }
@@ -37,8 +37,15 @@ class IgnoreBlockedAndTooSmallCodec : ICodec {
 
         outer@ for (y in CoordinateGrid.COORDINATE_RANGE) {
             for (x in CoordinateGrid.COORDINATE_RANGE) {
-                if (!grid.tryAddBuilding(currentBuilding, Coordinate(x, y))) {
+                val coordinate = Coordinate(x, y)
+                if (grid.isBlocked(coordinate)) {
                     continue
+                }
+
+                if (currentBuilding != null) {
+                    if (!grid.tryAddBuilding(currentBuilding, coordinate)) {
+                        continue
+                    }
                 }
 
                 if (!buildingIds.hasNext()) {

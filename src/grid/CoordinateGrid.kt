@@ -43,9 +43,12 @@ class CoordinateGrid {
         }
     }
 
+    fun isTileEmpty(coordinate: Coordinate) = tiles[coordinate.y][coordinate.x] is Tile.Empty
+    fun canPlaceBuilding(coordinate: Coordinate, size: Int) = getBlockedTileCoordinatesFor(coordinate, size) != null
+
     fun tryAddBuilding(building: Building, coordinate: Coordinate): Boolean {
         val blockedCoordinates: List<Coordinate> =
-            getBlockedTileCoordinates(coordinate, building.type.size)
+            getBlockedTileCoordinatesFor(coordinate, building.type.size)
                 ?: return false
 
         fun setTile(coordinate: Coordinate, tile: Tile) {
@@ -63,7 +66,7 @@ class CoordinateGrid {
         return true
     }
 
-    private fun getBlockedTileCoordinates(coordinate: Coordinate, size: Int): List<Coordinate>? {
+    private fun getBlockedTileCoordinatesFor(coordinate: Coordinate, size: Int): List<Coordinate>? {
         val blockedTiles: MutableList<Coordinate> = mutableListOf()
         val blockedRange = 0..<size
 
@@ -76,13 +79,13 @@ class CoordinateGrid {
                     return null
                 }
 
-                val testedTile = tiles[y][x]
+                val newCoordinate = Coordinate(x, y)
 
-                if (testedTile is Tile.Blocked || testedTile is Tile.Built) {
+                if (!isTileEmpty(newCoordinate)) {
                     return null
                 }
 
-                blockedTiles.add(Coordinate(x, y))
+                blockedTiles.add(newCoordinate)
             }
         }
 

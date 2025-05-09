@@ -1,8 +1,8 @@
 package codec
 
-import Tile
 import grid.Coordinate
 import grid.CoordinateGrid
+import grid.Tile
 
 class CompleteGridCodec : ICodec {
 

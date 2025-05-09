@@ -1,6 +1,5 @@
 package grid
 
-import Tile
 import getIdToBuildingMap
 
 class CoordinateGrid {
@@ -19,9 +18,11 @@ class CoordinateGrid {
         MutableList(GRID_SIZE) { Tile.Empty }
     }
 
+    fun isBlocked(coordinate: Coordinate): Boolean = tiles[coordinate.y][coordinate.x] is Tile.Blocked
+
     val tileList: List<Tile>
         get() = tiles.flatten()
-    
+
     override fun equals(other: Any?): Boolean {
         return other is CoordinateGrid && tileList == other.tileList
     }

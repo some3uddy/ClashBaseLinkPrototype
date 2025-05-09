@@ -1,10 +1,10 @@
 package codec
 
-import Tile
 import getIdToBuildingMap
 import grid.Building
 import grid.Coordinate
 import grid.CoordinateGrid
+import grid.Tile
 
 class IgnoreBlockedAndTooSmallCodec : ICodec {
 

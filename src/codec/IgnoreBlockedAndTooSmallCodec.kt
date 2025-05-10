@@ -39,13 +39,8 @@ class IgnoreBlockedAndTooSmallCodec : ICodec {
 
             val nextBuiltTile = builtAndEmptyCoordinateTilePairs.firstNotNullOfOrNull {
                 it.second as? Tile.Built
-            }// ?: break
-            // todo: issue lies here (but probably on the decoding side)
-            if (nextBuiltTile == null) {
-                println("broke")
-                break
-            }
-
+            } ?: break
+            
             val nextBuildingSize = nextBuiltTile.building.type.size
 
             if (reconstructedGrid.canPlaceBuilding(currentCoordinate, nextBuildingSize)) {

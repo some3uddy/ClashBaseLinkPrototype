@@ -11,7 +11,9 @@ class IgnoreBlockedCodec : ICodec {
 
 
     override fun encodeGrid(grid: CoordinateGrid): String {
-        return grid.tileList.filter { it !is Tile.Blocked }.joinToString("") { tile ->
+        return grid.tileList.filter {
+            it !is Tile.Blocked
+        }.joinToString("") { tile ->
             encodeBuildingId(
                 if (tile is Tile.Built) {
                     tile.building.id
@@ -32,7 +34,6 @@ class IgnoreBlockedCodec : ICodec {
                 idToBuildingMap[id]
             }
             .iterator()
-        //.chunked(grid.CoordinateGrid.SIZE)
 
         val grid = CoordinateGrid()
         var currentBuilding = buildingIds.next()

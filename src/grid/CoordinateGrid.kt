@@ -97,8 +97,6 @@ class CoordinateGrid {
             MutableList(GRID_SIZE) { Tile.Empty }
         }
 
-        //: List<List<Building>>
-        // : List<Map.Entry<Int, List<Building>>>
         val buildingsBySize = getIdToBuildingMap()
             // all buildings
             .values
@@ -112,8 +110,6 @@ class CoordinateGrid {
             .sortedByDescending { it.key }
             // as list of (Size, Lists of buildings) Pair 
             .map { Pair(it.key, it.value) }
-        //.map { it.value }
-
 
         buildingsBySize.forEach { (size, buildings) ->
             placeBuildingsOfSizeRandomly(size, buildings.iterator())
@@ -140,10 +136,8 @@ class CoordinateGrid {
                         }
                         building = buildings.next()
                     } while (buildings.hasNext())
-                    //todo: check?
                     return
                 }
-
                 continue
             }
 

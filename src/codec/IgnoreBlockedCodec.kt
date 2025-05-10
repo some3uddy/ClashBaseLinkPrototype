@@ -7,6 +7,8 @@ import grid.CoordinateGrid
 import grid.Tile
 
 class IgnoreBlockedCodec : ICodec {
+    // skips blocked fields in the encoding/decoding
+
 
     override fun encodeGrid(grid: CoordinateGrid): String {
         return grid.tileList.filter { it !is Tile.Blocked }.joinToString("") { tile ->

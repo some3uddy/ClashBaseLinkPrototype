@@ -14,7 +14,7 @@ class CoordinateGrid {
         }
     }
 
-    private var tiles: MutableList<MutableList<Tile>> = MutableList(GRID_SIZE) {
+    var tiles: MutableList<MutableList<Tile>> = MutableList(GRID_SIZE) {
         MutableList(GRID_SIZE) { Tile.Empty }
     }
 

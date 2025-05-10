@@ -1,5 +1,6 @@
 import codec.CompleteGridCodec
 import codec.ICodec
+import codec.IgnoreBlockedAndTooSmallCodec
 import codec.IgnoreBlockedCodec
 import grid.Building
 import grid.BuildingType
@@ -10,10 +11,10 @@ import grid.CoordinateGrid
 
 // done:
 // - basic encoder but not saving blocked slots at all
-// - ignore blocked encoder with bool skip for empty
+// - ignore blocked encoder
 
 // todo:
-
+// - bool skip for empty
 // - ignore spaces too small
 // - check notes
 // - place from size 1 2 3 4 in that order, place 4 3 2 1 for mock
@@ -28,9 +29,9 @@ fun runAll() {
     println()
     println("ignore blocked")
     runExperiment(IgnoreBlockedCodec())
-//    println()
-//    println("ignore blocked and too small")
-//    runExperiment(IgnoreBlockedAndTooSmallCodec())
+    println()
+    println("ignore blocked and too small")
+    runExperiment(IgnoreBlockedAndTooSmallCodec())
 }
 
 fun runExperiment(codec: ICodec) {

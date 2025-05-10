@@ -5,6 +5,7 @@ import grid.CoordinateGrid
 import grid.Tile
 
 class CompleteGridCodec : ICodec {
+    // encodes/decodes every tile
 
     override fun encodeGrid(grid: CoordinateGrid): String {
         return grid.tileList.joinToString("") { tile ->

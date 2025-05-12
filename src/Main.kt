@@ -9,13 +9,13 @@ import grid.CoordinateGrid
 // done:
 // - basic encoder but not saving blocked slots at all
 // - ignore blocked encoder
-// - place in size order 4 3 2 1 for mock to randomiuze
+// - ignore spaces too small
+// - place in size order 4 3 2 1 for mock to randomize
+// - bool skip for empty
 
 // todo:
-// - bool skip for empty
-// - ignore spaces too small
+// - potentially test 2 bits to store how many fields are to be skipped? 
 // - check notes
-
 
 // reverse approach:
 // - save coords in id order
@@ -61,6 +61,9 @@ fun runExperiment(codec: ICodec) {
 
     val decodedGrid = codec.decodeGrid(decodedFromb64Grid)
     //val decodedGrid = codec.decodeGrid(encodedGrid)
+
+    val compressedBinaryString = ICodec.compressBinary(encodedGrid)
+    println("compressed binary encoded length is ${compressedBinaryString.length}")
 
     println("equal: ${decodedGrid == grid}")
 

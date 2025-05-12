@@ -1,25 +1,36 @@
-import codec.CompleteGridCodec
-import codec.ICodec
-import codec.IgnoreBlockedAndTooSmallCodec
-import codec.IgnoreBlockedCodec
+import codec.*
 import grid.Building
 import grid.BuildingType
 import grid.CoordinateGrid
 
 // area is 44x44
-// potentially use BitSet
+
 
 // done:
 // - basic encoder but not saving blocked slots at all
 // - ignore blocked encoder
+// - place in size order 4 3 2 1 for mock to randomiuze
 
 // todo:
 // - bool skip for empty
 // - ignore spaces too small
 // - check notes
-// - place from size 1 2 3 4 in that order, place 4 3 2 1 for mock
+
+
+// reverse approach:
+// - save coords in id order
+// - save tiles to next id placement
+//- start with smallest, save valid tiles to next id placement (how to reduce bitcount for skip number?)
+
 
 fun main() {
+
+//    val xx = StringBuilder("11")
+//    xx.deleteRange(0, 1)
+//    println(
+//        xx.toString()
+//    )
+
     runAll()
 }
 
@@ -32,6 +43,9 @@ fun runAll() {
     println()
     println("ignore blocked and too small")
     runExperiment(IgnoreBlockedAndTooSmallCodec())
+    println()
+    println("skip invalid with bool")
+    runExperiment(SkipInvalidWithBoolCodec())
 }
 
 fun runExperiment(codec: ICodec) {

@@ -1,4 +1,5 @@
-import codec.*
+import codec.CoordinatesPerIdCodec
+import codec.ICodec
 import grid.Building
 import grid.BuildingType
 import grid.CoordinateGrid
@@ -24,28 +25,24 @@ import grid.CoordinateGrid
 
 
 fun main() {
-
-//    val xx = StringBuilder("11")
-//    xx.deleteRange(0, 1)
-//    println(
-//        xx.toString()
-//    )
-
     runAll()
 }
 
 fun runAll() {
-    println("complete")
-    runExperiment(CompleteGridCodec())
-    println()
-    println("ignore blocked")
-    runExperiment(IgnoreBlockedCodec())
-    println()
-    println("ignore blocked and too small")
-    runExperiment(IgnoreBlockedAndTooSmallCodec())
-    println()
-    println("skip invalid with bool")
-    runExperiment(SkipInvalidWithBoolCodec())
+//    println("complete")
+//    runExperiment(CompleteGridCodec())
+//    println()
+//    println("ignore blocked")
+//    runExperiment(IgnoreBlockedCodec())
+//    println()
+//    println("ignore blocked and too small")
+//    runExperiment(IgnoreBlockedAndTooSmallCodec())
+//    println()
+//    println("skip invalid with bool")
+//    runExperiment(SkipInvalidWithBoolCodec()) 
+//    println()
+    println("coordinates per id codec")
+    runExperiment(CoordinatesPerIdCodec())
 }
 
 fun runExperiment(codec: ICodec) {

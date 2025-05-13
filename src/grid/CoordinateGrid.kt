@@ -117,7 +117,8 @@ class CoordinateGrid {
 
     }
 
-    private fun placeBuildingsOfSizeRandomly(size: Int, buildings: Iterator<Building>) {
+
+    private fun OLDplaceBuildingsOfSizeRandomly(size: Int, buildings: Iterator<Building>) {
         val range = 0..<(GRID_SIZE - size + 1)
         var building = buildings.next()
         var failCounter = 0
@@ -144,6 +145,39 @@ class CoordinateGrid {
             failCounter = 0
             building = buildings.next()
         } while (buildings.hasNext())
+    }
+
+    private fun placeBuildingsOfSizeRandomly(size: Int, buildings: Iterator<Building>) {
+        val range = 0..<(GRID_SIZE - size + 1)
+        
+//        if (failCounter >= 500) {
+//            println("resort to manual placing")
+//            do {
+//                if (!placeBuildingInNextFree(range, building)) {
+//                    println("failed to place all buildings of size: $size")
+//                    return
+//                }
+//                building = buildings.next()
+//            } while (buildings.hasNext())
+//            return
+//        }
+
+
+        buildings.asSequence().toList().forEach {
+            var failCounter = 0
+
+            while (failCounter < 500) {
+                val randomCoordinate = Coordinate(range.random(), range.random())
+                if (tryAddBuilding(it, randomCoordinate)) {
+                    return@forEach
+                }
+                failCounter++
+            }
+
+            println("failed to place all buildings of size: $size")
+
+
+        }
     }
 
     fun placeBuildingInNextFree(range: IntRange, building: Building): Boolean {

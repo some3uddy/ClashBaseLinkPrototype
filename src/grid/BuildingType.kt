@@ -48,5 +48,21 @@ enum class BuildingType(val amount: Int, val size: Int = 3) {
     SEEKING_AIR_MINE(9, 1),
     SKELETON_TRAP(4, 1),
     TORNADO_TRAP(1, 1),
-    GIGA_BOMB(1, 2),
+    GIGA_BOMB(1, 2);
+
+    companion object {
+        val buildings: List<Building> by lazy {
+            var idCounter = 0
+            return@lazy entries.flatMap { type ->
+                List(type.size) {
+                    Building(idCounter, type).also {
+                        idCounter++
+                    }
+                }
+            }
+        }
+
+        val idToBuildingMap: Map<Int, Building> by lazy { buildings.associateBy { it.id } }
+
+    }
 }

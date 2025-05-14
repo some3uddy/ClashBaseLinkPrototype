@@ -1,8 +1,6 @@
-import codec.CoordinatesPerIdCodec
-import codec.ICodec
-import grid.Building
-import grid.BuildingType
-import grid.CoordinateGrid
+import codec.core.BaseCodec
+import codec.encode_ids.SimpleIdCodec
+import grid.Coordinate
 
 // area is 44x44
 
@@ -25,7 +23,21 @@ import grid.CoordinateGrid
 
 
 fun main() {
-    runAll()
+
+    verifyCodec(SimpleIdCodec(11), 5)
+    verifyCodec(SimpleIdCodec(9), 5)
+
+}
+
+private fun verifyCodec(codec: BaseCodec, attempts: Int = 100) {
+    val testResults = List(attempts) { codec.testEncoding() }
+    if (testResults.all { it }) {
+        println("${codec.name} validated")
+    } else {
+        println("${codec.name} failed")
+    }
+    codec.testEncoding(true)
+    println()
 }
 
 fun runAll() {
@@ -41,46 +53,13 @@ fun runAll() {
 //    println("skip invalid with bool")
 //    runExperiment(SkipInvalidWithBoolCodec()) 
 //    println()
-    println("coordinates per id codec")
-    runExperiment(CoordinatesPerIdCodec())
+    // println("coordinates per id codec")
+    // runExperiment(CoordinatesPerIdCodec())
 }
 
-fun runExperiment(codec: ICodec) {
-    val grid = CoordinateGrid.createRandomlyPopulated()
-
-    val encodedGrid = codec.encodeGrid(grid)
-    println("binary encoded length: ${encodedGrid.length}")
-    val b64encodedGrid = ICodec.encodeBinaryToBase64(encodedGrid)
-    println("base64 encoded size: ${b64encodedGrid.length}")
-
-    val decodedFromb64Grid = ICodec.decodeBase64ToBinaryString(b64encodedGrid)
-    println("binary decoded length: ${decodedFromb64Grid.length}")
-
-    val decodedGrid = codec.decodeGrid(decodedFromb64Grid)
-    //val decodedGrid = codec.decodeGrid(encodedGrid)
-
-    val compressedBinaryString = ICodec.compressBinary(encodedGrid)
-    println("compressed binary encoded length is ${compressedBinaryString.length}")
-
-    println("equal: ${decodedGrid == grid}")
-
-//    grid.print()
-//    println()
-//    decodedGrid.print()
-
-}
-
-fun getIdToBuildingMap(): Map<Int, Building> {
-    val buildings: MutableMap<Int, Building> = mutableMapOf()
-    var idCounter = 0
-
-    BuildingType.entries.forEach { buildingType ->
-        repeat(buildingType.amount) {
-            val newBuilding = Building(idCounter, buildingType)
-            buildings.put(idCounter, newBuilding)
-            idCounter++
-        }
+fun calculateCoordinatesIn(range: IntRange, offset: Coordinate = Coordinate(0, 0)): List<Coordinate> =
+    range.flatMap { y ->
+        range.map { x -> Coordinate(x + offset.x, y + offset.y) }
     }
 
-    return buildings.toMap()
-}
+

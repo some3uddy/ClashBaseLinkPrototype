@@ -1,5 +1,5 @@
 import codec.core.BaseCodec
-import codec.encode_ids.SimpleIdCodec
+import codec.encode_ids.ValidTilesIdCodec
 import grid.Coordinate
 
 // area is 44x44
@@ -23,10 +23,11 @@ import grid.Coordinate
 
 
 fun main() {
+    //verifyCodec(SimpleIdCodec(11), 5)
+    //verifyCodec(SimpleIdCodec(9), 5)
 
-    verifyCodec(SimpleIdCodec(11), 5)
-    verifyCodec(SimpleIdCodec(9), 5)
-
+    verifyCodec(ValidTilesIdCodec(11), 100)
+    verifyCodec(ValidTilesIdCodec(9), 100)
 }
 
 private fun verifyCodec(codec: BaseCodec, attempts: Int = 100) {
@@ -40,23 +41,7 @@ private fun verifyCodec(codec: BaseCodec, attempts: Int = 100) {
     println()
 }
 
-fun runAll() {
-//    println("complete")
-//    runExperiment(CompleteGridCodec())
-//    println()
-//    println("ignore blocked")
-//    runExperiment(IgnoreBlockedCodec())
-//    println()
-//    println("ignore blocked and too small")
-//    runExperiment(IgnoreBlockedAndTooSmallCodec())
-//    println()
-//    println("skip invalid with bool")
-//    runExperiment(SkipInvalidWithBoolCodec()) 
-//    println()
-    // println("coordinates per id codec")
-    // runExperiment(CoordinatesPerIdCodec())
-}
-
+//TODO: extract into file
 fun calculateCoordinatesIn(range: IntRange, offset: Coordinate = Coordinate(0, 0)): List<Coordinate> =
     range.flatMap { y ->
         range.map { x -> Coordinate(x + offset.x, y + offset.y) }

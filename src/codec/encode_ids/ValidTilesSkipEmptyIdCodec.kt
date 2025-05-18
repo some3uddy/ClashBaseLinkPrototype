@@ -3,7 +3,7 @@ package codec.encode_ids
 import codec.core.BaseCodec
 import grid.*
 
-class SkipInvalidTilesIdCodec(override val bitSize: Int) : BaseCodec("Skip invalid tiles ID codec (${bitSize}bit)") {
+class ValidTilesSkipEmptyIdCodec(override val bitSize: Int) : BaseCodec("Skip invalid tiles ID codec (${bitSize}bit)") {
 
     override fun encodeGrid(grid: CoordinateGrid): String {
         val builtAndEmptyCoordinateTilePairs: MutableList<Pair<Coordinate, Tile>> = mutableListOf()

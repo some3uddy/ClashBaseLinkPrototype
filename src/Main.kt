@@ -1,5 +1,5 @@
 import codec.core.BaseCodec
-import codec.encode_ids.ValidTilesIdCodec
+import codec.encode_ids.SkipInvalidTilesIdCodec
 import grid.Coordinate
 
 // area is 44x44
@@ -23,11 +23,15 @@ import grid.Coordinate
 
 
 fun main() {
-    //verifyCodec(SimpleIdCodec(11), 5)
-    //verifyCodec(SimpleIdCodec(9), 5)
+    //verifyCodec(SimpleIdCodec(11))
+    //verifyCodec(SimpleIdCodec(9))
 
-    verifyCodec(ValidTilesIdCodec(11), 100)
-    verifyCodec(ValidTilesIdCodec(9), 100)
+//    verifyCodec(ValidTilesIdCodec(11), 100)
+//    verifyCodec(ValidTilesIdCodec(9), 100)
+
+
+    verifyCodec(SkipInvalidTilesIdCodec(9), 5)
+    //verifyCodec(SkipInvalidTilesIdCodec(9),5)
 }
 
 private fun verifyCodec(codec: BaseCodec, attempts: Int = 100) {

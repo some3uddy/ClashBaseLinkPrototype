@@ -53,16 +53,16 @@ enum class BuildingType(val amount: Int, val size: Int = 3) {
     companion object {
         val buildings: List<Building> by lazy {
             var idCounter = 0
-            return@lazy entries.flatMap { type ->
-                List(type.size) {
+            entries.flatMap { type ->
+                List(type.amount) {
                     Building(idCounter, type).also {
                         idCounter++
                     }
                 }
+
             }
         }
 
         val idToBuildingMap: Map<Int, Building> by lazy { buildings.associateBy { it.id } }
-
     }
 }

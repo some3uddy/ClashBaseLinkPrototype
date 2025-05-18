@@ -4,7 +4,7 @@ import calculateCoordinatesIn
 import codec.core.BaseCodec
 import grid.*
 
-class ValidTilesIdCodec(override val bitSize: Int) : BaseCodec("Valid ID codec (${bitSize}bit)") {
+class ValidTilesIdCodec(override val bitSize: Int) : BaseCodec("Valid tiles ID codec (${bitSize}bit)") {
 
     override fun encodeGrid(grid: CoordinateGrid): String {
         val builtAndEmptyCoordinateTilePairs: MutableList<Pair<Coordinate, Tile>> = mutableListOf()
@@ -48,6 +48,7 @@ class ValidTilesIdCodec(override val bitSize: Int) : BaseCodec("Valid ID codec (
     }
 
     override fun decodeGrid(binaryGrid: String): CoordinateGrid {
+        //TODO: make immutable
         val idToBuildingMap: MutableMap<Int, Building> = BuildingType.idToBuildingMap.toMutableMap()
 
         val buildingsOrEmpty: MutableList<Building?> = binaryGrid

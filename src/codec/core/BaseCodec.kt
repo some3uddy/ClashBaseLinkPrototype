@@ -36,7 +36,7 @@ abstract class BaseCodec(val name: String) {
         val decodedGrid: CoordinateGrid = decodeGrid(binaryDecodedGrid)
 
         val wasEncodingSuccessful = grid == decodedGrid
-
+        
         if (printOutput) {
             println("binary encoded length: ${binaryEncodedGrid.length}")
             println("base64 encoded size: ${base64EncodedGrid.length}")
